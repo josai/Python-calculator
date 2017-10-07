@@ -1,64 +1,98 @@
 def PrintWelcomMessage():
     print ("Welcome")
-    
+
+
 def PrintInstruction():
     print("1 = Addition")
     print("2 = Subtraction")
     print("3 = Multiplication")
     print("4 = Division")
-    print("5 = Exit program")
+    print("5 = Modulo")
+    print("6 = Exit program")
 
 
 def PrintGoodbyeMessage():
     print ("Goodbye")
-    
-def Add(Operation, Operand1, Operand2):         #addition 
-    return str(Operand1 + Operand2)
 
-def Subtract(Operation, Operand1, Operand2):    #subtraction 
-    return str(Operand1 - Operand2)
 
-def Multiply(Operation, Operand1, Operand2):    #multipication
-    return str(Operand1 * Operand2)
+def Add(operation, x, y):
+    return (x + y)
 
-def Division(Operation, Operand1, Operand2):    #division, check for divide by zero 
-    if Operand2==0:
-        return "Cannot divide by Zero."
+
+def Subtract(operation, x, y):
+    return (x - y)
+
+
+def Multiply(operation, x, y):
+    return (x * y)
+
+
+def Division(operation, x, y):
+    '''
+    Check for division by zero, if not then operate.
+    '''
+    if y == 0:
+        return("Cannot divide by Zero.")
     else:
-        return str(Operand1 / Operand2)    
+        return (x / y)
+
+
+def Modulo(operation, x, y):
+    '''
+    Check for modulo by zero, if not then operate.
+    '''
+    if y == 0:
+        return("Cannot modulo by Zero.")
+    else:
+        return (x % y)
 
 
 def GetInput():
     Operation = int(input("Enter Calculator Operation: "))
     Operand1 = int(input("Enter first number: "))
     Operand2 = int(input("Enter second number: "))
-    return Operation, Operand1, Operand2
-    
-def ValidateInput (Operation, Operand1, Operand2):
- 
-    if Operation >= 1 and Operation <= 5:
-        ValidationResult = True
+    return (Operation, Operand1, Operand2)
+
+
+def Operate(operation, x, y):
+    '''
+    Finds the proper operator and returns the result of that operation.
+    '''
+    if operation == 1:  # Addition code
+        return (Add(operation, x, y))
+    if operation == 2:  # Subtraction code
+        return (Subtract(operation, x, y))
+    if operation == 3:  # Multiplication code
+        return (Multiply(operation, x, y))
+    if operation == 4:  # Division code
+        return (Division(operation, x, y))
+    if operation == 5:  # Modulo code
+        return (Modulo(operation, x, y))
+
+
+def ValidateInput(operation, x, y):
+    if operation >= 1 and operation <= 5:
+        return (True)
     else:
-        ValidationResult=False
+        return (False)
 
-    return ValidationResult  #True or False
 
-if __name__=="__main__":    #This part of code will execute first 
-    PrintWelcomMessage()    #Print welcome message
-    PrintInstruction()      #Print calculator instrucionts
-          
-    Operation, Operand1, Operand2 = GetInput()    #get input, operation, operand1 and 2
-    
-    ValidationResult = ValidateInput (Operation, Operand1, Operand2)    #validate input
-    
-    if ValidationResult:
-        print("do normal things")
+def Main():
+    PrintWelcomMessage()
+    PrintInstruction()
+    operation, x, y = GetInput()
 
+    if operation == 6:
+        print("User exit")
     else:
-        if     Operation == 5:
-            PrintGoodbyeMessage()
-            #exit
+        validation_result = ValidateInput(operation, x, y)
+        if not validation_result:
+            exception_message = "invalid input"
+            print("Exception raised:", exception_message)
         else:
-            print("raise exception")
-                
-        
+            calculation_result = Operate(operation, x, y)
+            print("Result of calculation =", str(calculation_result))
+            PrintGoodbyeMessage()
+
+if __name__ == "__main__":  # This part of code will execute first
+    Main()
